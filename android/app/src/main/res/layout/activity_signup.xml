@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent" android:layout_height="match_parent" android:background="@drawable/bg_gradient" android:padding="24dp">
+
+    <TextView android:id="@+id/tvTitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/signup" android:textColor="#FFFFFF" android:textSize="32sp" android:textStyle="bold" android:layout_marginTop="40dp" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView android:id="@+id/tvSubtitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Create your account" android:textColor="#E0E0E0" android:textSize="18sp" android:layout_marginTop="8dp" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
+    <EditText android:id="@+id/etName" android:layout_width="match_parent" android:layout_height="56dp" android:layout_marginTop="40dp" android:background="@drawable/bg_input_field" android:hint="@string/enter_name" android:inputType="textPersonName" android:paddingStart="16dp" android:paddingEnd="16dp" android:textColor="#333333" android:textColorHint="#999999" android:textSize="16sp" app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toBottomOf="@id/tvSubtitle" />
+
+    <EditText android:id="@+id/etEmail" android:layout_width="match_parent" android:layout_height="56dp" android:layout_marginTop="16dp" android:background="@drawable/bg_input_field" android:hint="@string/email_enter" android:inputType="textEmailAddress" android:paddingStart="16dp" android:paddingEnd="16dp" android:textColor="#333333" android:textColorHint="#999999" android:textSize="16sp" app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toBottomOf="@id/etName" />
+
+    <EditText android:id="@+id/etMobile" android:layout_width="match_parent" android:layout_height="56dp" android:layout_marginTop="16dp" android:background="@drawable/bg_input_field" android:hint="@string/enter_mobile" android:inputType="phone" android:paddingStart="16dp" android:paddingEnd="16dp" android:textColor="#333333" android:textColorHint="#999999" android:textSize="16sp" app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toBottomOf="@id/etEmail" />
+
+    <EditText android:id="@+id/etPassword" android:layout_width="match_parent" android:layout_height="56dp" android:layout_marginTop="16dp" android:background="@drawable/bg_input_field" android:hint="@string/enter_password" android:inputType="textPassword" android:paddingStart="16dp" android:paddingEnd="16dp" android:textColor="#333333" android:textColorHint="#999999" android:textSize="16sp" app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toBottomOf="@id/etMobile" />
+
+    <Button android:id="@+id/btnSubmit" android:layout_width="match_parent" android:layout_height="60dp" android:layout_marginTop="40dp" android:background="@drawable/btn_white_rounded" android:text="@string/submit" android:textAllCaps="false" android:textColor="#2575fc" android:textSize="18sp" android:textStyle="bold" app:backgroundTint="@null" app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toBottomOf="@id/etPassword" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
