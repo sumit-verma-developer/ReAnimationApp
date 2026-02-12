@@ -14,15 +14,27 @@ const Nolibrary = () => {
   //   return () => clearInterval(interval);
   // }, []);
 
-  return <View style={[styles.box, { marginLeft: position }]} />;
+  return (
+    <View style={styles.container}>
+      <View style={[styles.box, { marginLeft: position }]} />;
+    </View>
+  )
 };
 
 export default Nolibrary;
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    // lightGrey
+    backgroundColor: '#5E5E5E'
+  },
   box: {
     width: 50,
     height: 50,
     backgroundColor: 'yellow',
+    borderRadius: 10,
   },
 });

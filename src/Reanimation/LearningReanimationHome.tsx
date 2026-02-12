@@ -10,10 +10,20 @@ import React from 'react'
 import { useSharedValue } from 'react-native-reanimated'
 import { ScreenData } from './ScreenData'
 import { useNavigation } from '@react-navigation/native'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import { FlashList } from "@shopify/flash-list";
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 const LearningReanimationHome = () => {
     const progress = useSharedValue(0)
     const navigation = useNavigation()
+
+    const insets = useSafeAreaInsets();
+    const scrollY = useSharedValue(0);
+    const SPACING = 20;
+
+
+
 
     const onPress = (item: string) => {
         navigation.navigate(item as never)
@@ -41,25 +51,46 @@ const LearningReanimationHome = () => {
         )
     }
 
+
+
+
     return (
         <View style={styles.mainContainer}>
             <StatusBar barStyle="dark-content" />
 
             {/* Header */}
             <View style={styles.header}>
+                <Icon name="arrow-left" size={24} color="#111827" />
                 <Text style={styles.headerTitle}>Reanimated Lab 🚀</Text>
+                <View style={styles.headerRight}>
+                    <Icon name="account" size={24} color="#111827" />
+                </View>
+            </View>
+            <View style={styles.headerSubtitleContainer}>
                 <Text style={styles.headerSubtitle}>
                     Master animations step by step
                 </Text>
             </View>
 
             {/* List */}
-            <FlatList
+            <FlashList
                 data={ScreenData}
                 keyExtractor={(_, index) => index.toString()}
                 renderItem={renderItem}
-                contentContainerStyle={styles.listContainer}
+
                 showsVerticalScrollIndicator={false}
+
+                onScroll={(e) =>
+                    scrollY.value = e.nativeEvent.contentOffset.y
+                }
+                // estimatedItemSize={118}
+                ItemSeparatorComponent={() => <View style={{ height: 2 }} />}
+                contentContainerStyle={{
+                    paddingTop: insets.top,
+                    paddingHorizontal: SPACING,
+                    paddingBottom: 2 * SPACING,
+                }}
+
             />
         </View>
     )
@@ -76,8 +107,11 @@ const styles = StyleSheet.create({
 
     header: {
         paddingHorizontal: 20,
-        paddingTop: 20,
+        paddingTop: '20%',
         paddingBottom: 10,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
     },
 
     headerTitle: {
@@ -87,14 +121,19 @@ const styles = StyleSheet.create({
     },
 
     headerSubtitle: {
-        fontSize: 14,
+        fontSize: 16,
         color: '#6B7280',
         marginTop: 6,
+        fontWeight: '600',
+    },
+    headerSubtitleContainer: {
+        paddingHorizontal: 20,
+        alignSelf: 'center',
     },
 
-    listContainer: {
-        padding: 20,
-    },
+    // listContainer: {
+    //     padding: 20,
+    // },
 
     card: {
         backgroundColor: '#FFFFFF',
@@ -133,5 +172,9 @@ const styles = StyleSheet.create({
         fontSize: 13,
         color: '#6B7280',
         marginTop: 6,
+    },
+    headerRight: {
+        flexDirection: 'row',
+        alignItems: 'center',
     },
 })

@@ -6,11 +6,11 @@ import {
   useAnimatedValue,
   View,
 } from 'react-native';
-import React, {useRef} from 'react';
+import React, { useRef } from 'react';
 
 const Event = () => {
   // pan Responder , Animated.event(get Dimension value)
-  const pan = useRef(new Animated.ValueXY({x: 0, y: 0})).current;
+  const pan = useRef(new Animated.ValueXY({ x: 0, y: 0 })).current;
   const scale = useAnimatedValue(1);
 
   const panResponder = useRef(
@@ -30,14 +30,14 @@ const Event = () => {
             dy: pan.y,
           },
         ],
-        {useNativeDriver: false},
+        { useNativeDriver: false },
       ),
       // 2d dimension support nhi krte hain native event es liye useNativeDriver:false
 
       onPanResponderRelease: (evt, gestureState) => {
         Animated.parallel([
           Animated.spring(pan, {
-            toValue: {x: 0, y: 0},
+            toValue: { x: 0, y: 0 },
             useNativeDriver: true,
           }),
           Animated.spring(scale, {
@@ -55,7 +55,7 @@ const Event = () => {
         {...panResponder.panHandlers}
         style={[
           styles.box,
-          {transform: [...pan.getTranslateTransform(), {scale}]},
+          { transform: [...pan.getTranslateTransform(), { scale }] },
         ]}
       />
     </View>

@@ -1,20 +1,20 @@
 import React from 'react';
-import {FlashList} from '@shopify/flash-list';
-import {Image, StyleSheet, View} from 'react-native';
-import {useSharedValue} from 'react-native-reanimated';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import { FlashList } from '@shopify/flash-list';
+import { Image, StyleSheet, View } from 'react-native';
+import { useSharedValue } from 'react-native-reanimated';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import StatusBarManager from '@components/StatusBarManager';
-import {FadeItemProps} from '@components/fadeItemList/types';
+import { FadeItemProps } from '@components/fadeItemList/types';
 import FadeListItem from '@components/fadeItemList/FadeListItem';
 import ImplementedWith from '@components/fadeItemList/ImplementedWith';
-import {BG_IMG, DATA, SPACING} from '@components/fadeItemList/constants';
+import { BG_IMG, DATA, SPACING } from '@components/fadeItemList/constants';
 
 const ScrollItemListScreen = () => {
   const insets = useSafeAreaInsets();
   const scrollY = useSharedValue(0);
 
-  const renderItem = ({item, index}: FadeItemProps) => (
+  const renderItem = ({ item, index }: FadeItemProps) => (
     <FadeListItem item={item} index={index} scrollY={scrollY} />
   );
 
@@ -26,7 +26,7 @@ const ScrollItemListScreen = () => {
         <ImplementedWith />
         <Image
           blurRadius={50}
-          source={{uri: BG_IMG}}
+          source={{ uri: BG_IMG }}
           style={StyleSheet.absoluteFillObject}
         />
         <FlashList
@@ -41,7 +41,7 @@ const ScrollItemListScreen = () => {
             paddingBottom: 2 * SPACING,
           }}
           estimatedItemSize={118}
-          ItemSeparatorComponent={() => <View style={{height: SPACING}} />}
+          ItemSeparatorComponent={() => <View style={{ height: SPACING }} />}
           keyExtractor={item => item.key}
           renderItem={renderItem}
         />
