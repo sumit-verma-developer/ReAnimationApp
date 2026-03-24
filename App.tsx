@@ -65,6 +65,10 @@ import {
 } from 'recoil';
 import MainHome from '@/screens/MainHome';
 import LearningReanimationHome from './src/Reanimation/LearningReanimationHome';
+import { QueryClientProvider } from '@tanstack/react-query';
+import { queryClient } from '@/ TanStackQuery/react-query/queryClient';
+import TodoListScreen from './src/ TanStackQuery/UI/TodoListScreen';
+import CreateTodoScreen from '@/ TanStackQuery/UI/CreateTodoScreen';
 
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -120,135 +124,144 @@ export type RootStackParamList = {
   Move2D: undefined;
   MainHome: undefined;
   LearningReanimationHome: undefined;
+  TodoListScreen: undefined;
+  CreateTodoScreen: undefined;
 };
 
 export type THomeNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Home'>;
 
 const App = () => {
   return (
-    <RecoilRoot>
-      <GestureHandlerRootView style={{ flex: 1 }}>
-        <ModalProvider>
-          <SafeAreaProvider>
-            <NavigationContainer>
-              <Stack.Navigator screenOptions={{
-                headerShown: false,
-                animation: 'slide_from_right',
-              }}>
-                {/* animation: 'slide_from_right component', */}
-                <Stack.Screen name="MainHome" component={MainHome} />
-                <Stack.Screen name="LearningReanimationHome" component={LearningReanimationHome} />
-                <Stack.Screen name="Home" component={HomeScreen} />
-                <Stack.Screen name="Parallax" component={ParallaxScreen} />
-                <Stack.Screen
-                  name="ListWithIndicator"
-                  component={ListWithIndicatorScreen}
-                />
-                <Stack.Screen name="DoubleList" component={DoubleListScreen} />
-                <Stack.Screen name="Carousel3D" component={Carousel3DScreen} />
-                <Stack.Screen
-                  name="Progress"
-                  component={ProgressLoaderScreen}
-                />
-                <Stack.Screen name="DotLoader" component={DotLoaderScreen} />
-                <Stack.Screen name="Togglers" component={TogglersScreen} />
-                <Stack.Screen name="FadeItem" component={FadeItemListScreen} />
-                <Stack.Screen
-                  name="CustomDrawer"
-                  component={CustomDrawerScreen}
-                />
-                <Stack.Screen
-                  name="DrawerInterpolate"
-                  component={DrawerInterpolateScreen}
-                />
-                <Stack.Screen
-                  name="ProductList"
-                  component={ProductListScreen}
-                />
-                <Stack.Screen name="PinCode" component={PinCode} />
-                <Stack.Screen name="Floating" component={FloatingButton} />
-                <Stack.Screen name="Airbnb" component={AirbnbScreen} />
-                <Stack.Screen name="Ticket" component={TicketScreen} />
-                <Stack.Screen name="ShutdownIOS" component={ShutdownIOS} />
-                <Stack.Screen name="NFCReader" component={NFCReader} />
-                <Stack.Screen
-                  name="TranslateSearchIOS"
-                  component={TranslateSearchIOSScreen}
-                />
-                <Stack.Screen
-                  name="CircularProgressBar"
-                  component={CircularProgressBarScreen}
-                />
-                <Stack.Screen
-                  name="ValuePickers"
-                  component={ValuePickersScreen}
-                />
-                <Stack.Screen
-                  name="LikeInteraction"
-                  component={LikeInteractionScreen}
-                />
-                <Stack.Screen
-                  name="CircularAnimatedText"
-                  component={CircularAnimatedTextScreen}
-                />
-                <Stack.Screen name="Chat" component={ChatScreen} />
-                <Stack.Screen name="LinePieCharts" component={LinePieCharts} />
-                <Stack.Screen
-                  name="GroupStackCharts"
-                  component={GroupStackCharts}
-                />
-                <Stack.Screen
-                  name="TaskCalendar"
-                  component={TaskCalendarScreen}
-                />
-                <Stack.Screen
-                  name="ScreenTransition"
-                  component={ScreenTransitionStack}
-                />
+    <QueryClientProvider client={queryClient}>
+      <RecoilRoot>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <ModalProvider>
+            <SafeAreaProvider>
+              <NavigationContainer>
+                <Stack.Navigator screenOptions={{
+                  headerShown: false,
+                  animation: 'slide_from_right',
+                }}>
+                  {/* animation: 'slide_from_right component', */}
+                  <Stack.Screen name="MainHome" component={MainHome} />
+                  <Stack.Screen name="LearningReanimationHome" component={LearningReanimationHome} />
+                  <Stack.Screen name="Home" component={HomeScreen} />
+                  <Stack.Screen name="Parallax" component={ParallaxScreen} />
+                  <Stack.Screen
+                    name="ListWithIndicator"
+                    component={ListWithIndicatorScreen}
+                  />
+                  <Stack.Screen name="DoubleList" component={DoubleListScreen} />
+                  <Stack.Screen name="Carousel3D" component={Carousel3DScreen} />
+                  <Stack.Screen
+                    name="Progress"
+                    component={ProgressLoaderScreen}
+                  />
+                  <Stack.Screen name="DotLoader" component={DotLoaderScreen} />
+                  <Stack.Screen name="Togglers" component={TogglersScreen} />
+                  <Stack.Screen name="FadeItem" component={FadeItemListScreen} />
+                  <Stack.Screen
+                    name="CustomDrawer"
+                    component={CustomDrawerScreen}
+                  />
+                  <Stack.Screen
+                    name="DrawerInterpolate"
+                    component={DrawerInterpolateScreen}
+                  />
+                  <Stack.Screen
+                    name="ProductList"
+                    component={ProductListScreen}
+                  />
+                  <Stack.Screen name="PinCode" component={PinCode} />
+                  <Stack.Screen name="Floating" component={FloatingButton} />
+                  <Stack.Screen name="Airbnb" component={AirbnbScreen} />
+                  <Stack.Screen name="Ticket" component={TicketScreen} />
+                  <Stack.Screen name="ShutdownIOS" component={ShutdownIOS} />
+                  <Stack.Screen name="NFCReader" component={NFCReader} />
+                  <Stack.Screen
+                    name="TranslateSearchIOS"
+                    component={TranslateSearchIOSScreen}
+                  />
+                  <Stack.Screen
+                    name="CircularProgressBar"
+                    component={CircularProgressBarScreen}
+                  />
+                  <Stack.Screen
+                    name="ValuePickers"
+                    component={ValuePickersScreen}
+                  />
+                  <Stack.Screen
+                    name="LikeInteraction"
+                    component={LikeInteractionScreen}
+                  />
+                  <Stack.Screen
+                    name="CircularAnimatedText"
+                    component={CircularAnimatedTextScreen}
+                  />
+                  <Stack.Screen name="Chat" component={ChatScreen} />
+                  <Stack.Screen name="LinePieCharts" component={LinePieCharts} />
+                  <Stack.Screen
+                    name="GroupStackCharts"
+                    component={GroupStackCharts}
+                  />
+                  <Stack.Screen
+                    name="TaskCalendar"
+                    component={TaskCalendarScreen}
+                  />
+                  <Stack.Screen
+                    name="ScreenTransition"
+                    component={ScreenTransitionStack}
+                  />
 
 
-                {/* Reanimated */}
-                <Stack.Screen name="ScrollTo" component={ScrollTo} />
-                <Stack.Screen name="ScrollOffset" component={ScrollOffset} />
-                <Stack.Screen name="ScrollHandler" component={ScrollHandler} />
-                <Stack.Screen name="Hooks" component={Hooks} />
-                <Stack.Screen name="RNBasic" component={RNBasic} />
-                <Stack.Screen name="Method" component={Method} />
+                  {/* Reanimated */}
+                  <Stack.Screen name="ScrollTo" component={ScrollTo} />
+                  <Stack.Screen name="ScrollOffset" component={ScrollOffset} />
+                  <Stack.Screen name="ScrollHandler" component={ScrollHandler} />
+                  <Stack.Screen name="Hooks" component={Hooks} />
+                  <Stack.Screen name="RNBasic" component={RNBasic} />
+                  <Stack.Screen name="Method" component={Method} />
 
 
-                {/* Native Module */}
-                <Stack.Screen
-                  name="NativeModule"
-                  component={NativeModule}
-                  options={{ headerShown: false }}
-                />
+                  {/* Native Module */}
+                  <Stack.Screen
+                    name="NativeModule"
+                    component={NativeModule}
+                    options={{ headerShown: false }}
+                  />
 
-                {/* Animated Api */}
-                <Stack.Screen name="Nolibrary" component={Nolibrary} />
-                <Stack.Screen name="Basic" component={Basic} />
-                <Stack.Screen name="Value" component={Value} />
-                <Stack.Screen name="Interpolation" component={Interpolation} />
-                <Stack.Screen name="Animtypes" component={Animtypes} />
-                <Stack.Screen name="EasingAnimation" component={EasingAnimation} />
-                <Stack.Screen name="NestingFunction" component={NestingFunction} />
-                <Stack.Screen name="Event" component={Event} />
-                <Stack.Screen
-                  name="CustomAnimatedComponent"
-                  component={CustomAnimatedComponent}
-                />
-                <Stack.Screen name="LayoutAnimation" component={LayoutAnimation} />
-                <Stack.Screen
-                  name="ScrollEventHandler"
-                  component={ScrollEventHandler}
-                />
-                <Stack.Screen name="Success" component={Success} />
-                <Stack.Screen name="Move2D" component={Move2D} />
-              </Stack.Navigator>
-            </NavigationContainer>
-          </SafeAreaProvider>
-        </ModalProvider>
-      </GestureHandlerRootView>
-    </RecoilRoot>
+
+                  {/* TanStackQuery */}
+                  <Stack.Screen name="TodoListScreen" component={TodoListScreen} />
+                  <Stack.Screen name="CreateTodoScreen" component={CreateTodoScreen} />
+
+                  {/* Animated Api */}
+                  <Stack.Screen name="Nolibrary" component={Nolibrary} />
+                  <Stack.Screen name="Basic" component={Basic} />
+                  <Stack.Screen name="Value" component={Value} />
+                  <Stack.Screen name="Interpolation" component={Interpolation} />
+                  <Stack.Screen name="Animtypes" component={Animtypes} />
+                  <Stack.Screen name="EasingAnimation" component={EasingAnimation} />
+                  <Stack.Screen name="NestingFunction" component={NestingFunction} />
+                  <Stack.Screen name="Event" component={Event} />
+                  <Stack.Screen
+                    name="CustomAnimatedComponent"
+                    component={CustomAnimatedComponent}
+                  />
+                  <Stack.Screen name="LayoutAnimation" component={LayoutAnimation} />
+                  <Stack.Screen
+                    name="ScrollEventHandler"
+                    component={ScrollEventHandler}
+                  />
+                  <Stack.Screen name="Success" component={Success} />
+                  <Stack.Screen name="Move2D" component={Move2D} />
+                </Stack.Navigator>
+              </NavigationContainer>
+            </SafeAreaProvider>
+          </ModalProvider>
+        </GestureHandlerRootView>
+      </RecoilRoot>
+    </QueryClientProvider>
   );
 };
 

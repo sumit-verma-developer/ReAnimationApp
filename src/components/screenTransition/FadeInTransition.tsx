@@ -5,10 +5,10 @@ import Animated, {
   useSharedValue,
   useAnimatedStyle,
 } from 'react-native-reanimated';
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 
-import {WIDTH} from '@utils/device';
-import {FadeInTransitionProps} from './types';
+import { WIDTH } from '@utils/device';
+import { FadeInTransitionProps } from './types';
 
 const FadeInTransition = ({
   index = 0,
@@ -23,7 +23,7 @@ const FadeInTransition = ({
     if (animate) {
       progress.value = withDelay(
         index * 75,
-        withSpring(1, {damping: 80, stiffness: 200}),
+        withSpring(1, { damping: 80, stiffness: 200 }),
       );
     } else {
       progress.value = 0;
@@ -36,8 +36,8 @@ const FadeInTransition = ({
       return {
         opacity: progress.value,
         transform: [
-          {translateY: interpolate(progress.value, [0, 1], [75, 0])},
-          {scale: interpolate(progress.value, [0, 1], [1.25, 1])},
+          { translateY: interpolate(progress.value, [0, 1], [75, 0]) },
+          { scale: interpolate(progress.value, [0, 1], [1.25, 1]) },
         ],
       };
     }
@@ -47,9 +47,9 @@ const FadeInTransition = ({
       return {
         opacity: progress.value,
         transform: [
-          {translateY: interpolate(progress.value, [0, 1], [75, 0])},
-          {translateX: interpolate(progress.value, [0, 1], [25, 0])},
-          {scale: interpolate(progress.value, [0, 1], [1.1, 1])},
+          { translateY: interpolate(progress.value, [0, 1], [75, 0]) },
+          { translateX: interpolate(progress.value, [0, 1], [25, 0]) },
+          { scale: interpolate(progress.value, [0, 1], [1.1, 1]) },
         ],
       };
     }
@@ -59,9 +59,9 @@ const FadeInTransition = ({
       return {
         opacity: progress.value,
         transform: [
-          {translateY: interpolate(progress.value, [0, 1], [75, 0])},
-          {translateX: interpolate(progress.value, [0, 1], [-25, 0])},
-          {scale: interpolate(progress.value, [0, 1], [1.1, 1])},
+          { translateY: interpolate(progress.value, [0, 1], [75, 0]) },
+          { translateX: interpolate(progress.value, [0, 1], [-25, 0]) },
+          { scale: interpolate(progress.value, [0, 1], [1.1, 1]) },
         ],
       };
     }
@@ -70,7 +70,7 @@ const FadeInTransition = ({
     if (direction === 'top') {
       return {
         opacity: progress.value,
-        transform: [{translateY: interpolate(progress.value, [0, 1], [75, 0])}],
+        transform: [{ translateY: interpolate(progress.value, [0, 1], [75, 0]) }],
       };
     }
 
@@ -79,7 +79,7 @@ const FadeInTransition = ({
       return {
         opacity: progress.value,
         transform: [
-          {translateX: interpolate(progress.value, [0, 1], [WIDTH / 3.5, 0])},
+          { translateX: interpolate(progress.value, [0, 1], [WIDTH / 3.5, 0]) },
         ],
       };
     }

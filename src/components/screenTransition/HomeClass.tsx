@@ -1,21 +1,20 @@
 import React from 'react';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import {Image, StyleSheet, Text, View} from 'react-native';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import { Image, StyleSheet, Text, View } from 'react-native';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import {typography} from '@utils/typography';
+import { typography } from '@utils/typography';
 
 const HomeClass = () => {
   return (
     <View style={styles.container}>
       <View style={styles.homeworkContainer}>
         <Text style={styles.homeworkLabel}>Homework</Text>
-        <Ionicons name="checkmark-circle-sharp" size={24} />
+        <MaterialCommunityIcons name="check-circle-outline" size={24} />
       </View>
       <View style={styles.iconContainer}>
-        <FontAwesome5 name="calculator" size={20} />
+        <MaterialCommunityIcons name="calculator" size={20} />
       </View>
-      <View style={{gap: 6}}>
+      <View style={{ gap: 6 }}>
         <Text style={styles.classTitle}>{'Basic mathemactics'}</Text>
         <Text style={styles.classDate}>{'Today, 08:15 am'}</Text>
       </View>
@@ -23,7 +22,7 @@ const HomeClass = () => {
       <View style={styles.professorContainer}>
         <Image
           style={styles.professorImg}
-          source={{uri: 'https://randomuser.me/api/portraits/women/60.jpg'}}
+          source={{ uri: 'https://randomuser.me/api/portraits/women/60.jpg' }}
         />
         <Text style={styles.professorName}>Jane Cooper</Text>
       </View>

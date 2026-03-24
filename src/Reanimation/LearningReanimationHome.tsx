@@ -60,7 +60,9 @@ const LearningReanimationHome = () => {
 
             {/* Header */}
             <View style={styles.header}>
-                <Icon name="arrow-left" size={24} color="#111827" />
+                <Icon name="arrow-left" size={24} color="#111827" onPress={() => {
+                    navigation.goBack()
+                }} />
                 <Text style={styles.headerTitle}>Reanimated Lab 🚀</Text>
                 <View style={styles.headerRight}>
                     <Icon name="account" size={24} color="#111827" />

@@ -1,12 +1,12 @@
 import React from 'react';
-import {ViewStyle} from 'react-native';
+import { ViewStyle } from 'react-native';
 
-import BottomSheet, {BottomSheetRef} from '@components/BottomSheet';
+import BottomSheet, { BottomSheetRef } from '@components/BottomSheet';
 
 const initialState: TInitialState = {
   content: <></>,
   modalHeight: 0,
-  onBackPress: () => {},
+  onBackPress: () => { },
   panEnabled: true,
   withoutLine: false,
   lineStyle: {},
@@ -34,12 +34,12 @@ interface ModalContextType {
 
 const ModalContext = React.createContext<ModalContextType>({
   modalInfo: initialState,
-  setModalInfo: () => {},
-  resetModal: () => {},
-  closeModal: () => {},
+  setModalInfo: () => { },
+  resetModal: () => { },
+  closeModal: () => { },
 });
 
-export const ModalProvider = ({children}: {children: React.ReactNode}) => {
+export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
   const bottomSheetRef = React.useRef<BottomSheetRef>(null);
 
   const [modalInfo, setModalInfo] = React.useState(initialState);
@@ -62,7 +62,7 @@ export const ModalProvider = ({children}: {children: React.ReactNode}) => {
 
   return (
     <ModalContext.Provider
-      value={{modalInfo, setModalInfo, resetModal, closeModal}}>
+      value={{ modalInfo, setModalInfo, resetModal, closeModal }}>
       {children}
       <BottomSheet
         ref={bottomSheetRef}

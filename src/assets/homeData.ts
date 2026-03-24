@@ -1,4 +1,4 @@
-import {ColorValue} from 'react-native';
+import { ColorValue } from 'react-native';
 
 type TDATA = {
   iconName?: string;
@@ -234,16 +234,16 @@ export const DATA: TDATA = [
         backgroundColor: '#ff0059',
         screen: 'ValuePickers',
       },
-      // {
-      //   label: 'Ticket',
-      //   backgroundColor: '#c57f5d',
-      //   screen: 'Ticket',
-      // },
-      // {
-      //   label: 'Circular Progress Bar',
-      //   backgroundColor: '#ad77df',
-      //   screen: 'CircularProgressBar',
-      // },
+      {
+        label: 'Ticket',
+        backgroundColor: '#c57f5d',
+        screen: 'Ticket',
+      },
+      {
+        label: 'Circular Progress Bar',
+        backgroundColor: '#ad77df',
+        screen: 'CircularProgressBar',
+      },
     ],
   },
 ];

@@ -37,6 +37,16 @@ const MainHome = () => {
                         UI • Layout • Practice
                     </Text>
                 </TouchableOpacity>
+
+                <TouchableOpacity
+                    style={styles.card}
+                    onPress={() => navigation.navigate('TodoListScreen' as never)}
+                >
+                    <Text style={styles.cardTitle}>Todo App</Text>
+                    <Text style={styles.cardSub}>
+                        TanStack Query
+                    </Text>
+                </TouchableOpacity>
             </View>
         </View>
     )

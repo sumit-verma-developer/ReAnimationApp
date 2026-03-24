@@ -1,14 +1,14 @@
 import React from 'react';
-import {Text, View, StyleSheet} from 'react-native';
-import Feather from 'react-native-vector-icons/Feather';
+import { Text, View, StyleSheet } from 'react-native';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
-import {SearchBarProps} from './types';
-import {typography} from '@utils/typography';
+import { SearchBarProps } from './types';
+import { typography } from '@utils/typography';
 
-const SearchBar = ({containerStyle}: SearchBarProps) => {
+const SearchBar = ({ containerStyle }: SearchBarProps) => {
   return (
     <View style={[styles.container, containerStyle]}>
-      <Feather name={'search'} size={20} style={styles.search} />
+      <AntDesign name={'search1'} size={20} style={styles.search} />
       <Text style={styles.label}>Search</Text>
     </View>
   );
