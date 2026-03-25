@@ -59,10 +59,10 @@ jobs:
           cd android
           ./gradlew assembleRelease
 
-      - name: 📦 Build AAB
-        run: |
-          cd android
-          ./gradlew bundleRelease
+      # - name: 📦 Build AAB
+      #   run: |
+      #     cd android
+      #     ./gradlew bundleRelease
 
       - name: 📤 Upload Debug APK
         uses: actions/upload-artifact@v4
@@ -76,8 +76,8 @@ jobs:
           name: release-apk
           path: android/app/build/outputs/apk/release/app-release.apk
 
-      - name: 📤 Upload AAB
-        uses: actions/upload-artifact@v4
-        with:
-          name: release-aab
-          path: android/app/build/outputs/bundle/release/app-release.aab
+      # - name: 📤 Upload AAB
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: release-aab
+      #     path: android/app/build/outputs/bundle/release/app-release.aab
