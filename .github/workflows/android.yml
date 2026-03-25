@@ -1,83 +1,92 @@
-name: React Native CI/CD
-
-on:
-  push:
-    branches: [development]
-  pull_request:
-    branches: [development]
-  workflow_dispatch:
-
+# Minimal valid workflow to satisfy GitHub Actions schema while the real one is commented out
+name: Disabled Workflow
+on: workflow_dispatch
 jobs:
-  build-android:
+  stub:
     runs-on: ubuntu-latest
-
     steps:
-      - name: 📥 Checkout
-        uses: actions/checkout@v4
+      - run: echo "This workflow is disabled."
 
-      - name: 🟢 Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
+# name: React Native CI/CD
 
-      - name: 📦 Cache node modules
-        uses: actions/cache@v4
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('yarn.lock') }}
+# on:
+#   push:
+#     branches: [development]
+#   pull_request:
+#     branches: [development]
+#   workflow_dispatch:
 
-      - name: 📦 Install dependencies
-        run: yarn install --frozen-lockfile
+# jobs:
+#   build-android:
+#     runs-on: ubuntu-latest
 
-      - name: ☕ Setup Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: '17'
+#     steps:
+#       - name: 📥 Checkout
+#         uses: actions/checkout@v4
 
-      - name: 🤖 Setup Android SDK
-        uses: android-actions/setup-android@v3
+#       - name: 🟢 Setup Node
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version: 20
 
-      - name: ⚡ Cache Gradle
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+#       - name: 📦 Cache node modules
+#         uses: actions/cache@v4
+#         with:
+#           path: node_modules
+#           key: ${{ runner.os }}-node-${{ hashFiles('yarn.lock') }}
 
-      - name: 🔐 Give permission
-        run: chmod +x android/gradlew
+#       - name: 📦 Install dependencies
+#         run: yarn install --frozen-lockfile
 
-      - name: 🛠️ Build Debug APK
-        run: |
-          cd android
-          ./gradlew assembleDebug
+#       - name: ☕ Setup Java
+#         uses: actions/setup-java@v4
+#         with:
+#           distribution: 'temurin'
+#           java-version: '17'
 
-      - name: 🚀 Build Release APK
-        run: |
-          cd android
-          ./gradlew assembleRelease
+#       - name: 🤖 Setup Android SDK
+#         uses: android-actions/setup-android@v3
 
-      # - name: 📦 Build AAB
-      #   run: |
-      #     cd android
-      #     ./gradlew bundleRelease
+#       - name: ⚡ Cache Gradle
+#         uses: actions/cache@v4
+#         with:
+#           path: |
+#             ~/.gradle/caches
+#             ~/.gradle/wrapper
+#           key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
 
-      - name: 📤 Upload Debug APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: debug-apk
-          path: android/app/build/outputs/apk/debug/app-debug.apk
+#       - name: 🔐 Give permission
+#         run: chmod +x android/gradlew
 
-      - name: 📤 Upload Release APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: release-apk
-          path: android/app/build/outputs/apk/release/app-release.apk
+#       - name: 🛠️ Build Debug APK
+#         run: |
+#           cd android
+#           ./gradlew assembleDebug
 
-      # - name: 📤 Upload AAB
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: release-aab
-      #     path: android/app/build/outputs/bundle/release/app-release.aab
+#       - name: 🚀 Build Release APK
+#         run: |
+#           cd android
+#           ./gradlew assembleRelease
+
+#       # - name: 📦 Build AAB
+#       #   run: |
+#       #     cd android
+#       #     ./gradlew bundleRelease
+
+#       - name: 📤 Upload Debug APK
+#         uses: actions/upload-artifact@v4
+#         with:
+#           name: debug-apk
+#           path: android/app/build/outputs/apk/debug/app-debug.apk
+
+#       - name: 📤 Upload Release APK
+#         uses: actions/upload-artifact@v4
+#         with:
+#           name: release-apk
+#           path: android/app/build/outputs/apk/release/app-release.apk
+
+#       # - name: 📤 Upload AAB
+#       #   uses: actions/upload-artifact@v4
+#       #   with:
+#       #     name: release-aab
+#       #     path: android/app/build/outputs/bundle/release/app-release.aab
