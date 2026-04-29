@@ -9,11 +9,9 @@ import EasingAnimation from './src/Reanimation/AnimatedApi/EasingAnimation';
 import Success from './src/Reanimation/AnimatedApi/Success';
 import Move2D from './src/Reanimation/AnimatedApi/Move2D';
 import NestingFunction from './src/Reanimation/AnimatedApi/NestingFunction';
-import Event from './src/Reanimation/AnimatedApi/Event';
 import CustomAnimatedComponent from './src/Reanimation/AnimatedApi/CustomAnimatedComponent';
 import LayoutAnimation from './src/Reanimation/AnimatedApi/LayoutAnimation';
 import ScrollEventHandler from './src/Reanimation/AnimatedApi/ScrollEventHandler';
-import RNBasic from './src/Reanimation/Reanimated/RNBasic';
 import Method from './src/Reanimation/Reanimated/Method';
 import Hooks from './src/Reanimation/Reanimated/Hooks';
 import NativeModule from './src/Reanimation/nativeModule/NativeModule';
@@ -64,11 +62,30 @@ import {
   useRecoilValue,
 } from 'recoil';
 import MainHome from '@/screens/MainHome';
-import LearningReanimationHome from './src/Reanimation/LearningReanimationHome';
+import RnAnimatedHome from './src/Reanimation/RnAnimatedHome';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClient } from '@/ TanStackQuery/react-query/queryClient';
 import TodoListScreen from './src/ TanStackQuery/UI/TodoListScreen';
 import CreateTodoScreen from '@/ TanStackQuery/UI/CreateTodoScreen';
+import PracticeGround from '@/Reanimation/AnimatedApi/practicefiles/PracticeGround';
+import AnimatedEvent from './src/Reanimation/AnimatedApi/AnimatedEvent';
+import FirestoreScreen from '@/firestore/FirestoreScreen';
+import AnalyticsScreen from '@/firestore/AnalyticsScreen';
+import ReanimatedHome from '@/Reanimation/ReanimatedHome';
+import ReanimationBasic from './src/Reanimation/Reanimated/ReanimationBasic';
+import ReanimationPractice from '@/Reanimation/Reanimated/ReanimationPractice';
+import keyboardHandler from '@/Reanimation/Reanimated/keyboardHandler';
+import EnterExist from '@/Reanimation/Reanimated/EnterExist';
+import LayoutTransition from '@/Reanimation/Reanimated/LayoutTransition';
+import SkippingAnimation from '@/Reanimation/Reanimated/SkippingAnimation';
+import ListLayoutAnimations from '@/Reanimation/Reanimated/ListLayoutAnimations';
+import KeyframeAnimations from '@/Reanimation/Reanimated/KeyframeAnimations';
+import GestureHandling from '@/Reanimation/Reanimated/GestureHandling';
+import Worklets from '@/Reanimation/Reanimated/Worklets';
+import Threading from '@/Reanimation/Reanimated/Threading';
+import RnSkiaHome from '@/Reanimation/RnSkiaHome';
+import SkiaFundamentals from '@/Reanimation/skia/SkiaFundamentals';
+import CarGameWithSkia from '@/Reanimation/skia/CarGameWithSkia';
 
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -102,12 +119,6 @@ export type RootStackParamList = {
   GroupStackCharts: undefined;
   TaskCalendar: undefined;
   ScreenTransition: undefined;
-  ScrollTo: undefined;
-  ScrollOffset: undefined;
-  ScrollHandler: undefined;
-  Hooks: undefined;
-  RNBasic: undefined;
-  Method: undefined;
   NativeModule: undefined;
   Nolibrary: undefined;
   Basic: undefined;
@@ -116,16 +127,42 @@ export type RootStackParamList = {
   Animtypes: undefined;
   EasingAnimation: undefined;
   NestingFunction: undefined;
-  Event: undefined;
+  AnimatedEvent: undefined;
   CustomAnimatedComponent: undefined;
   LayoutAnimation: undefined;
   ScrollEventHandler: undefined;
   Success: undefined;
   Move2D: undefined;
   MainHome: undefined;
-  LearningReanimationHome: undefined;
+  RnAnimatedHome: undefined;
+  ReanimatedHome: undefined;
   TodoListScreen: undefined;
   CreateTodoScreen: undefined;
+  PracticeGround: undefined;
+  FirestoreScreen: undefined;
+  AnalyticsScreen: undefined;
+  ReanimationBasic: undefined;
+  RNBasic: undefined;
+  Hooks: undefined;
+  Method: undefined;
+  ScrollHandler: undefined;
+  ScrollOffset: undefined;
+  ScrollTo: undefined;
+  ReanimationPractice: undefined;
+  keyboardHandler: undefined;
+  EnterExist: undefined;
+  LayoutTransition: undefined;
+  SkippingAnimation: undefined;
+  ListLayoutAnimations: undefined;
+  KeyframeAnimations: undefined;
+  GestureHandling: undefined;
+  Worklet: undefined;
+  Threading: undefined;
+  RnSkiaHome: undefined,
+  SkiaFundamentals: undefined;
+  CarGameWithSkia: undefined;
+
+
 };
 
 export type THomeNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Home'>;
@@ -144,7 +181,7 @@ const App = () => {
                 }}>
                   {/* animation: 'slide_from_right component', */}
                   <Stack.Screen name="MainHome" component={MainHome} />
-                  <Stack.Screen name="LearningReanimationHome" component={LearningReanimationHome} />
+                  <Stack.Screen name="RnAnimatedHome" component={RnAnimatedHome} />
                   <Stack.Screen name="Home" component={HomeScreen} />
                   <Stack.Screen name="Parallax" component={ParallaxScreen} />
                   <Stack.Screen
@@ -215,12 +252,29 @@ const App = () => {
 
 
                   {/* Reanimated */}
+                  <Stack.Screen name="ReanimationBasic" component={ReanimationBasic} />
+                  <Stack.Screen name="ReanimatedHome" component={ReanimatedHome} />
                   <Stack.Screen name="ScrollTo" component={ScrollTo} />
                   <Stack.Screen name="ScrollOffset" component={ScrollOffset} />
                   <Stack.Screen name="ScrollHandler" component={ScrollHandler} />
                   <Stack.Screen name="Hooks" component={Hooks} />
-                  <Stack.Screen name="RNBasic" component={RNBasic} />
                   <Stack.Screen name="Method" component={Method} />
+                  <Stack.Screen name="keyboardHandler" component={keyboardHandler} />
+                  <Stack.Screen name="EnterExist" component={EnterExist} />
+                  <Stack.Screen name="ReanimationPractice" component={ReanimationPractice} />
+                  <Stack.Screen name="LayoutTransition" component={LayoutTransition} />
+                  <Stack.Screen name="SkippingAnimation" component={SkippingAnimation} />
+                  <Stack.Screen name="ListLayoutAnimations" component={ListLayoutAnimations} />
+                  <Stack.Screen name="KeyframeAnimations" component={KeyframeAnimations} />
+                  <Stack.Screen name="GestureHandling" component={GestureHandling} />
+                  <Stack.Screen name="Worklet" component={Worklets} />
+                  <Stack.Screen name="Threading" component={Threading} />
+
+
+                  {/* RnSkia */}
+                  <Stack.Screen name="RnSkiaHome" component={RnSkiaHome} />
+                  <Stack.Screen name="SkiaFundamentals" component={SkiaFundamentals} />
+                  <Stack.Screen name="CarGameWithSkia" component={CarGameWithSkia} />
 
 
                   {/* Native Module */}
@@ -230,12 +284,18 @@ const App = () => {
                     options={{ headerShown: false }}
                   />
 
+                  <Stack.Screen name="FirestoreScreen" component={FirestoreScreen} />
+                  <Stack.Screen name="AnalyticsScreen" component={AnalyticsScreen} />
+
 
                   {/* TanStackQuery */}
                   <Stack.Screen name="TodoListScreen" component={TodoListScreen} />
                   <Stack.Screen name="CreateTodoScreen" component={CreateTodoScreen} />
 
-                  {/* Animated Api */}
+
+
+                  {/* React-native Animated Api */}
+                  <Stack.Screen name="PracticeGround" component={PracticeGround} />
                   <Stack.Screen name="Nolibrary" component={Nolibrary} />
                   <Stack.Screen name="Basic" component={Basic} />
                   <Stack.Screen name="Value" component={Value} />
@@ -243,7 +303,7 @@ const App = () => {
                   <Stack.Screen name="Animtypes" component={Animtypes} />
                   <Stack.Screen name="EasingAnimation" component={EasingAnimation} />
                   <Stack.Screen name="NestingFunction" component={NestingFunction} />
-                  <Stack.Screen name="Event" component={Event} />
+                  <Stack.Screen name="AnimatedEvent" component={AnimatedEvent} />
                   <Stack.Screen
                     name="CustomAnimatedComponent"
                     component={CustomAnimatedComponent}

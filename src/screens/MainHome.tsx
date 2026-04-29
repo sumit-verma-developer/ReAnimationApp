@@ -20,11 +20,32 @@ const MainHome = () => {
 
                 <TouchableOpacity
                     style={styles.card}
-                    onPress={() => navigation.navigate('LearningReanimationHome' as never)}
+                    onPress={() => navigation.navigate('RnAnimatedHome' as never)}
                 >
-                    <Text style={styles.cardTitle}>Reanimated Lab</Text>
+                    <Text style={styles.cardTitle}>React-native-Animated Api </Text>
                     <Text style={styles.cardSub}>
-                        Animations • Gestures • Transitions
+                        Animations • Gestures • mostly run on js thread (use for small animation)
+                    </Text>
+                </TouchableOpacity>
+
+
+                <TouchableOpacity
+                    style={styles.card}
+                    onPress={() => navigation.navigate('ReanimatedHome' as never)}
+                >
+                    <Text style={styles.cardTitle}>Reanimation by sofware mansion</Text>
+                    <Text style={styles.cardSub}>
+                        complex Animations • run of UI thread (use for complex animations)
+                    </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    style={styles.card}
+                    onPress={() => navigation.navigate('RnSkiaHome' as never)}
+                >
+                    <Text style={styles.cardTitle}>React native Skia </Text>
+                    <Text style={styles.cardSub}>
+                        2D animations • run of UI thread (use for complex animations)
                     </Text>
                 </TouchableOpacity>
 
@@ -32,9 +53,9 @@ const MainHome = () => {
                     style={styles.card}
                     onPress={() => navigation.navigate('Home' as never)}
                 >
-                    <Text style={styles.cardTitle}>Home Screen</Text>
+                    <Text style={styles.cardTitle}>Reanimation Better Ui</Text>
                     <Text style={styles.cardSub}>
-                        UI • Layout • Practice
+                        UI • Layout • Project Base
                     </Text>
                 </TouchableOpacity>
 
@@ -45,6 +66,15 @@ const MainHome = () => {
                     <Text style={styles.cardTitle}>Todo App</Text>
                     <Text style={styles.cardSub}>
                         TanStack Query
+                    </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={styles.card}
+                    onPress={() => navigation.navigate('FirestoreScreen' as never)}
+                >
+                    <Text style={styles.cardTitle}>Firestore</Text>
+                    <Text style={styles.cardSub}>
+                        Firestore Database
                     </Text>
                 </TouchableOpacity>
             </View>

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "266021093556",
+    "project_id": "ageless-accord-492810-p5",
+    "storage_bucket": "ageless-accord-492810-p5.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:266021093556:android:2db3cfab9a4c33708a17e1",
+        "android_client_info": {
+          "package_name": "com.animationapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDbNMFBDdRpAntQ58t3k05ppECDCGqcuw8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

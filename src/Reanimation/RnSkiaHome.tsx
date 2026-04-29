@@ -8,13 +8,13 @@ import {
 } from 'react-native'
 import React from 'react'
 import { useSharedValue } from 'react-native-reanimated'
-import { ScreenData } from './ScreenData'
+import { RnSkiaScreenData } from './ScreenData'
 import { useNavigation } from '@react-navigation/native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { FlashList } from "@shopify/flash-list";
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
-const LearningReanimationHome = () => {
+const RnSkiaHome = () => {
     const progress = useSharedValue(0)
     const navigation = useNavigation()
 
@@ -34,7 +34,7 @@ const LearningReanimationHome = () => {
             <TouchableOpacity
                 activeOpacity={0.8}
                 style={styles.card}
-                onPress={() => onPress(item.name)}
+                onPress={() => onPress(item.component)}
             >
                 <View style={styles.cardContent}>
                     <Text style={styles.cardIndex}>
@@ -44,7 +44,7 @@ const LearningReanimationHome = () => {
                     <Text style={styles.cardTitle}>{item.name}</Text>
 
                     <Text style={styles.cardSubTitle}>
-                        Tap to explore animation
+                        Tap to explore  animation
                     </Text>
                 </View>
             </TouchableOpacity>
@@ -63,7 +63,7 @@ const LearningReanimationHome = () => {
                 <Icon name="arrow-left" size={24} color="#111827" onPress={() => {
                     navigation.goBack()
                 }} />
-                <Text style={styles.headerTitle}>Reanimated Lab 🚀</Text>
+                <Text style={styles.headerTitle}>React-Native-Skia 🚀</Text>
                 <View style={styles.headerRight}>
                     <Icon name="account" size={24} color="#111827" />
                 </View>
@@ -76,7 +76,7 @@ const LearningReanimationHome = () => {
 
             {/* List */}
             <FlashList
-                data={ScreenData}
+                data={RnSkiaScreenData}
                 keyExtractor={(_, index) => index.toString()}
                 renderItem={renderItem}
 
@@ -98,7 +98,7 @@ const LearningReanimationHome = () => {
     )
 }
 
-export default LearningReanimationHome
+export default RnSkiaHome
 
 
 const styles = StyleSheet.create({
