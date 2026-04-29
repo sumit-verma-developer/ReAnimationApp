@@ -1,10 +1,9 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import { Text, View, Image, TouchableOpacity } from 'react-native';
 import React, { useCallback, useEffect, useState } from 'react';
 import {
   Gesture,
   GestureDetector,
   GestureHandlerRootView,
-  PanGesture,
 } from 'react-native-gesture-handler';
 import { styles } from './styles';
 import { Canvas, Group, Rect } from '@shopify/react-native-skia';
@@ -12,12 +11,17 @@ import {
   CAR_HEIGHT,
   CAR_WIDTH,
   height,
+  HITBOX_HORIZONTAL_PADDING,
+  HITBOX_VERTICAL_PADDING,
   INITIAL_SPEED,
   LANE_CENTERS,
   LANE_WIDTH,
   MIN_SPAWN_INTERVAL,
   OBSTACLE_HEIGHT,
+  OBSTACLE_SPAWN_CLEARANCE,
+  Obstacle,
   obstacleImages,
+  PLAYER_BOTTOM,
   ROAD_LINE_GAP,
   ROAD_LINE_HEIGHT,
   RoadLine,
@@ -32,14 +36,14 @@ import Animated, {
 
 const CarGameWithSkia = () => {
   const [roadLine, setRoadLine] = useState<RoadLine[]>([]);
-  const [translationX, setTranslationX] = useState(0);
   const [score, setScore] = useState(0); // Added score state
   const [gameSpeed, setGameSpeed] = useState(INITIAL_SPEED); // Added gameSpeed state
   const [gameOver, setGameOver] = useState(false); // Added gameOver state
   const lastSpawnTime = useSharedValue(0); // Added lastSpawnTime for obstacle spawning
-  const [obstacles, setObstacles] = useState<any[]>([]); // Added obstacles state
+  const [obstacles, setObstacles] = useState<Obstacle[]>([]); // Added obstacles state
   const playerX = useSharedValue(LANE_CENTERS[1]);
-  const playerY = height - CAR_HEIGHT - 20;
+  const gestureStartX = useSharedValue(LANE_CENTERS[1]);
+  const playerY = height - CAR_HEIGHT - PLAYER_BOTTOM;
 
   useEffect(() => {
     const totalLines = Math.ceil(height / ROAD_LINE_HEIGHT + ROAD_LINE_GAP) + 1;
@@ -55,19 +59,32 @@ const CarGameWithSkia = () => {
   }, []);
 
   const pangesture = Gesture.Pan()
+    .onBegin(() => {
+      gestureStartX.value = playerX.value;
+    })
     .onUpdate(e => {
-      const currentLane = Math.round(playerX.value / LANE_WIDTH);
-      const targetLane = Math.max(
+      playerX.value = Math.max(
+        LANE_CENTERS[0],
+        Math.min(LANE_CENTERS[2], gestureStartX.value + e.translationX),
+      );
+    })
+    .onEnd(() => {
+      const nearestLane = LANE_CENTERS.reduce(
+        (closestLaneIndex, laneCenter, laneIndex) => {
+          const closestDistance = Math.abs(
+            playerX.value - LANE_CENTERS[closestLaneIndex],
+          );
+          const laneDistance = Math.abs(playerX.value - laneCenter);
+
+          return laneDistance < closestDistance ? laneIndex : closestLaneIndex;
+        },
         0,
-        Math.min(2, Math.round((playerX.value + e.translationX) / LANE_WIDTH)),
       );
 
-      if (currentLane !== targetLane) {
-        playerX.value = withSpring(LANE_CENTERS[targetLane], {
-          stiffness: 200,
-          damping: 20,
-        });
-      }
+      playerX.value = withSpring(LANE_CENTERS[nearestLane], {
+        stiffness: 220,
+        damping: 24,
+      });
     })
     .activeOffsetX([-10, 10]);
 
@@ -75,149 +92,139 @@ const CarGameWithSkia = () => {
     transform: [{ translateX: playerX.value }],
   }));
 
-  const resetGame = () => {
+  const resetGame = useCallback(() => {
     setGameOver(false);
     setScore(0);
     setGameSpeed(INITIAL_SPEED);
     playerX.value = LANE_CENTERS[1];
     setObstacles([]);
     lastSpawnTime.value = 0;
-  };
+  }, [lastSpawnTime, playerX]);
 
- const getSafeLanes = useCallback(() => {
-  const dangerZone = height / 2;
-
-  const occupiedLanes = new Set(
-    obstacles
-      .filter((obs) => obs.y < dangerZone)
-      .map((obs) => obs.lane)
-  );
-
-  return [0, 1, 2].filter((lane) => {
-    if (occupiedLanes.has(lane)) return false;
-
-    const leftLane = lane - 1;
-    const rightLane = lane + 1;
-
-    const adjacentBlocked =
-      leftLane >= 0 &&
-      occupiedLanes.has(leftLane) &&
-      rightLane <= 2 &&
-      occupiedLanes.has(rightLane);
-
-    return !adjacentBlocked;
-  });
-}, [obstacles, playerX.value,height]);
-
-
-const spawnObstacle = useCallback(() => {
-  const now = Date.now();
-
-  // Prevent spawning too fast
-  if (now - lastSpawnTime.value < MIN_SPAWN_INTERVAL) return;
-
-  const safeLanes = getSafeLanes();
-  if (safeLanes.length === 0) return;
-
-  // Pick random safe lane
-  const lane =
-    safeLanes[Math.floor(Math.random() * safeLanes.length)];
-
-  // Slight random speed variation
-  const obstacleSpeed = gameSpeed + (Math.random() - 0.5);
-
-  // Pick random obstacle image
-  const randomImage =
-    obstacleImages[
-      Math.floor(Math.random() * obstacleImages.length)
-    ];
-
-  // Add new obstacle
-  setObstacles((prev) => [
-    ...prev,
-    {
-      id: `obs-${Date.now()}`,
-      x: LANE_CENTERS[lane],
-      y: -OBSTACLE_HEIGHT,
-      speed: obstacleSpeed,
-      lane,
-      image: randomImage,
-    },
-  ]);
-
-  // Update last spawn time
-  lastSpawnTime.value = now;
-}, [gameSpeed, getSafeLanes, obstacleImages]);
-
-
-
-useEffect(() => {
-  if (gameOver) return;
-
-  const gameLoop = setInterval(() => {
-    // Increase speed gradually
-    setGameSpeed((prev) =>
-      Math.min(prev + SPEED_INCREMENT / 100, 8)
+  const getSafeLanes = useCallback((currentObstacles: Obstacle[]) => {
+    const occupiedLanes = new Set(
+      currentObstacles
+        .filter(obs => obs.y < OBSTACLE_SPAWN_CLEARANCE)
+        .map(obs => obs.lane),
     );
 
-    // Move road lines
-    setRoadLine((prev) =>
-      prev.map((line) => {
-        const newY = line.y + gameSpeed;
+    return [0, 1, 2].filter(lane => !occupiedLanes.has(lane));
+  }, []);
 
-        if (newY >= height) {
+  const spawnObstacle = useCallback(() => {
+    const now = Date.now();
+
+    // Prevent spawning too fast
+    if (now - lastSpawnTime.value < MIN_SPAWN_INTERVAL) return;
+
+    setObstacles(prev => {
+      const safeLanes = getSafeLanes(prev);
+      if (safeLanes.length === 0) return prev;
+
+      // Pick random safe lane
+      const lane = safeLanes[Math.floor(Math.random() * safeLanes.length)];
+
+      // Slight random speed variation
+      const obstacleSpeed = gameSpeed + (Math.random() - 0.5);
+
+      // Pick random obstacle image
+      const randomImage =
+        obstacleImages[Math.floor(Math.random() * obstacleImages.length)];
+
+      // Add new obstacle
+      return [
+        ...prev,
+        {
+          id: `obs-${Date.now()}`,
+          x: LANE_CENTERS[lane],
+          y: -OBSTACLE_HEIGHT,
+          speed: obstacleSpeed,
+          lane,
+          image: randomImage,
+        },
+      ];
+    });
+
+    // Update last spawn time
+    lastSpawnTime.value = now;
+  }, [gameSpeed, getSafeLanes, lastSpawnTime]);
+
+  useEffect(() => {
+    if (gameOver) return;
+
+    const gameLoop = setInterval(() => {
+      // Increase speed gradually
+      setGameSpeed(prev => Math.min(prev + SPEED_INCREMENT / 100, 8));
+
+      // Move road lines
+      setRoadLine(prev =>
+        prev.map(line => {
+          const newY = line.y + gameSpeed;
+
+          if (newY >= height) {
+            return {
+              ...line,
+              y: -ROAD_LINE_HEIGHT,
+            };
+          }
+
           return {
             ...line,
-            y: -ROAD_LINE_HEIGHT,
-          };
-        }
-
-        return {
-          ...line,
-          y: newY,
-        };
-      })
-    );
-
-    // Spawn obstacles
-    spawnObstacle();
-
-    // Move obstacles + collision + score
-    setObstacles((prev) => {
-      return prev
-        .map((obs) => {
-          const newY = obs.y + obs.speed;
-
-          // Collision detection
-          const carOverlap =
-            newY + OBSTACLE_HEIGHT > playerY &&
-            newY < playerY + CAR_HEIGHT;
-
-          const laneOverlap =
-            Math.abs(obs.x - playerX.value) < CAR_WIDTH * 0.7;
-
-          if (carOverlap && laneOverlap) {
-            setGameOver(true);
-          }
-
-          return {
-            ...obs,
             y: newY,
           };
-        })
-        .filter((obs) => {
-          // Remove obstacle if out of screen
-          if (obs.y > height) {
-            setScore((prev) => prev + 1);
-            return false;
-          }
-          return true;
-        });
-    });
-  }, 16); // ~60 FPS
+        }),
+      );
 
-  return () => clearInterval(gameLoop);
-}, [gameOver, gameSpeed, spawnObstacle]);
+      // Spawn obstacles
+      spawnObstacle();
+
+      // Move obstacles + collision + score
+      setObstacles(prev => {
+        return prev
+          .map(obs => {
+            const newY = obs.y + obs.speed;
+
+            const playerHitbox = {
+              left: playerX.value + HITBOX_HORIZONTAL_PADDING,
+              right: playerX.value + CAR_WIDTH - HITBOX_HORIZONTAL_PADDING,
+              top: playerY + HITBOX_VERTICAL_PADDING,
+              bottom: playerY + CAR_HEIGHT - HITBOX_VERTICAL_PADDING,
+            };
+            const obstacleHitbox = {
+              left: obs.x + HITBOX_HORIZONTAL_PADDING,
+              right: obs.x + CAR_WIDTH - HITBOX_HORIZONTAL_PADDING,
+              top: newY + HITBOX_VERTICAL_PADDING,
+              bottom: newY + OBSTACLE_HEIGHT - HITBOX_VERTICAL_PADDING,
+            };
+
+            const isColliding =
+              playerHitbox.left < obstacleHitbox.right &&
+              playerHitbox.right > obstacleHitbox.left &&
+              playerHitbox.top < obstacleHitbox.bottom &&
+              playerHitbox.bottom > obstacleHitbox.top;
+
+            if (isColliding) {
+              setGameOver(true);
+            }
+
+            return {
+              ...obs,
+              y: newY,
+            };
+          })
+          .filter(obs => {
+            // Remove obstacle if out of screen
+            if (obs.y > height) {
+              setScore(currentScore => currentScore + 1);
+              return false;
+            }
+            return true;
+          });
+      });
+    }, 16); // ~60 FPS
+
+    return () => clearInterval(gameLoop);
+  }, [gameOver, gameSpeed, playerX, playerY, spawnObstacle]);
 
   return (
     <GestureHandlerRootView>
@@ -256,23 +263,15 @@ useEffect(() => {
               styles.playCar,
               playerStyle,
               {
-                bottom: 50,
+                bottom: PLAYER_BOTTOM,
                 width: CAR_WIDTH,
                 height: CAR_HEIGHT,
               },
             ]}
           >
             <Image
-              source={require('../../assets/img/car/blackCar.png')}
-              style={[
-                styles.carImage,
-                {
-                  zIndex: 3,
-                  width: CAR_WIDTH,
-                  height: CAR_HEIGHT,
-                  resizeMode: 'contain',
-                },
-              ]}
+              source={require('../../assets/img/car/blueCar.png')}
+              style={styles.carImage}
             />
           </Animated.View>
         </GestureDetector>
